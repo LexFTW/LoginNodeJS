@@ -19,7 +19,19 @@ app.set('view engine', 'ejs');
 // routes
 app.get('/', function(req, res){
   res.render('index');
-})
+});
+
+app.get('/api/login/:user/:pass', function(req, res){
+  for (var i = 0; i < users.length; i++) {
+    if(users[i]['name'] == req.params.user && users[i]['password'] == req.params.pass){
+      var msg = {"status" : "OK"};
+      res.send(JSON.stringify(msg));
+      return;
+    }
+  }
+  var msg = {"status" : "ERROR"};
+  res.send(JSON.stringify(msg));
+});
 
 app.post('/', function(req, res){
   console.log('[INFO] - Checking name, wait...')
